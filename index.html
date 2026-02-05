@@ -4,497 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hey Peanut! 💕</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Floating Hearts and Photos Background */
-        .hearts-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .floating-heart {
-            position: absolute;
-            font-size: 20px;
-            animation: floatUp 6s ease-in infinite;
-            opacity: 0.7;
-        }
-
-        .floating-photo {
-            position: absolute;
-            animation: floatUpPhoto 8s ease-in infinite;
-            opacity: 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            background: white;
-            padding: 8px;
-            padding-bottom: 30px;
-        }
-
-        .floating-photo img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            display: block;
-            border-radius: 4px;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.7;
-            }
-            90% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-100px) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes floatUpPhoto {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.8;
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* Main Container */
-        .container {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* Screens */
-        .screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.8s ease;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        .screen.active {
-            display: flex;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Card Style */
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 500px;
-        }
-
-        /* Typography */
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
-            color: #e74c8c;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            color: #e74c8c;
-            margin-bottom: 15px;
-        }
-
-        p {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .emoji-large {
-            font-size: 80px;
-            margin: 20px 0;
-            animation: pulse 1.5s ease infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Welcome Photo */
-        .welcome-photo {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 20px auto;
-            border: 5px solid white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: pulse 2s ease infinite;
-        }
-
-        /* Photo Gallery/Slideshow */
-        .photo-slideshow {
-            margin: 20px 0;
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            height: 350px;
-            overflow: hidden;
-            border-radius: 20px;
-        }
-
-        .slideshow-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .slideshow-image.active {
-            display: block;
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .slideshow-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .slide-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #ddd;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .slide-dot.active {
-            background: #e74c8c;
-            transform: scale(1.3);
-        }
-
-        /* Photo Grid for Final Screen */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-            max-width: 350px;
-        }
-
-        .photo-grid img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s;
-        }
-
-        .photo-grid img:hover {
-            transform: scale(1.1);
-            z-index: 10;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #e74c8c, #f857a6);
-            color: white;
-            box-shadow: 0 10px 30px rgba(231, 76, 140, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(231, 76, 140, 0.5);
-        }
-
-        .btn-secondary {
-            background: #eee;
-            color: #666;
-        }
-
-        /* Trivia */
-        .trivia-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .trivia-option {
-            padding: 15px 25px;
-            background: #f8f8f8;
-            border: 3px solid transparent;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .trivia-option:hover {
-            background: #fff0f5;
-            border-color: #e74c8c;
-            transform: scale(1.02);
-        }
-
-        .trivia-option.correct {
-            background: #d4edda;
-            border-color: #28a745;
-            animation: correctPulse 0.5s ease;
-        }
-
-        .trivia-option.wrong {
-            background: #f8d7da;
-            border-color: #dc3545;
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes correctPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .score-display {
-            font-size: 1.1rem;
-            color: #e74c8c;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        /* The Big Question */
-        .question-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
-            min-height: 80px;
-            align-items: center;
-        }
-
-        .btn-yes {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            font-size: 1.5rem;
-            padding: 20px 50px;
-            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
-        }
-
-        .btn-yes:hover {
-            transform: scale(1.1);
-        }
-
-        .btn-no {
-            background: #dc3545;
-            color: white;
-            position: relative;
-            transition: all 0.1s ease;
-        }
-
-        /* Coloring Canvas */
-        .coloring-section {
-            margin-top: 20px;
-        }
-
-        .color-palette {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-
-        .color-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 3px solid white;
-            cursor: pointer;
-            transition: transform 0.2s;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        }
-
-        .color-btn:hover {
-            transform: scale(1.2);
-        }
-
-        .color-btn.active {
-            border-color: #333;
-            transform: scale(1.2);
-        }
-
-        .coloring-canvas-container {
-            position: relative;
-            margin: 20px auto;
-        }
-
-        #coloringCanvas {
-            border-radius: 15px;
-            background: white;
-            cursor: crosshair;
-            touch-action: none;
-        }
-
-        .brush-size {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 10px 0;
-        }
-
-        .brush-size input {
-            width: 150px;
-        }
-
-        /* Final Screen */
-        .final-message {
-            font-size: 1.3rem;
-        }
-
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            top: -10px;
-            animation: confettiFall 3s ease-in forwards;
-        }
-
-        @keyframes confettiFall {
-            to {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* Taco and Reese's animation */
-        .treat-rain {
-            position: fixed;
-            font-size: 30px;
-            top: -50px;
-            animation: treatFall 4s ease-in forwards;
-            z-index: 1000;
-        }
-
-        @keyframes treatFall {
-            to {
-                transform: translateY(110vh) rotate(360deg);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 500px) {
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
-            .card { padding: 25px; }
-            .btn { padding: 12px 30px; }
-            .photo-grid { grid-template-columns: repeat(2, 1fr); }
-            .welcome-photo { width: 150px; height: 150px; }
-        }
-
-        /* Progress dots */
-        .progress-dots {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #ddd;
-            transition: all 0.3s;
-        }
-
-        .dot.active {
-            background: #e74c8c;
-            transform: scale(1.2);
-        }
-
-        .dot.completed {
-            background: #28a745;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <!-- Floating Hearts and Photos Background -->
@@ -504,7 +14,7 @@
         <!-- Screen 1: Welcome -->
         <div class="screen active" id="screen1">
             <div class="card">
-                <img src="IMG_2876.jpeg" alt="Us" class="welcome-photo">
+                <img src="images/IMG_2876.jpeg" alt="Us" class="welcome-photo">
                 <h1>Helloooooo!</h1>
                 <p>I made something special just for you...</p>
                 <p>Are you ready for a little adventure?</p>
@@ -548,14 +58,14 @@
                 <h2>Our Beautiful Memories 📸</h2>
                 <p>Let's take a moment to remember all our special times together...</p>
                 <div class="photo-slideshow">
-                    <img src="DSCF3755.JPG" class="slideshow-image active" alt="Memory">
-                    <img src="IMG_1895.jpeg" class="slideshow-image" alt="Memory">
-                    <img src="IMG_2870.jpeg" class="slideshow-image" alt="Memory">
-                    <img src="IMG_2876.jpeg" class="slideshow-image" alt="Memory">
-                    <img src="IMG_2877.jpeg" class="slideshow-image" alt="Memory">
-                    <img src="IMG_2885.jpeg" class="slideshow-image" alt="Memory">
-                    <img src="IMG_4731.jpeg" class="slideshow-image" alt="Memory">
-                    <img src="IMG_4751.jpeg" class="slideshow-image" alt="Memory">
+                    <img src="images/DSCF3755.JPG" class="slideshow-image active" alt="Memory">
+                    <img src="images/IMG_1895.jpeg" class="slideshow-image" alt="Memory">
+                    <img src="images/IMG_2870.jpeg" class="slideshow-image" alt="Memory">
+                    <img src="images/IMG_2876.jpeg" class="slideshow-image" alt="Memory">
+                    <img src="images/IMG_2877.jpeg" class="slideshow-image" alt="Memory">
+                    <img src="images/IMG_2885.jpeg" class="slideshow-image" alt="Memory">
+                    <img src="images/IMG_4731.jpeg" class="slideshow-image" alt="Memory">
+                    <img src="images/IMG_4751.jpeg" class="slideshow-image" alt="Memory">
                 </div>
                 <div class="slideshow-dots" id="slideshowDots"></div>
                 <button class="btn btn-primary" onclick="nextScreen(6)" style="margin-top: 20px;">Continue 💕</button>
@@ -605,480 +115,118 @@
                 <h1>YAAAAY!</h1>
                 <p class="final-message">I knew you'd say yes! 💕</p>
                 <div class="photo-grid">
-                    <img src="IMG_2888.jpeg" alt="Us">
-                    <img src="IMG_2955.jpeg" alt="Us">
-                    <img src="IMG_2971.jpeg" alt="Us">
-                    <img src="IMG_4788.jpeg" alt="Us">
-                    <img src="IMG_4807.jpeg" alt="Us">
-                    <img src="IMG_7011.jpeg" alt="Us">
-                    <img src="IMG_9017.jpeg" alt="Us">
-                    <img src="IMG_9103.jpeg" alt="Us">
-                    <img src="IMG_9344.jpeg" alt="Us">
+                    <img src="images/IMG_2888.jpeg" alt="Us">
+                    <img src="images/IMG_2955.jpeg" alt="Us">
+                    <img src="images/IMG_2971.jpeg" alt="Us">
+                    <img src="images/IMG_4788.jpeg" alt="Us">
+                    <img src="images/IMG_4807.jpeg" alt="Us">
+                    <img src="images/IMG_7011.jpeg" alt="Us">
+                    <img src="images/IMG_9017.jpeg" alt="Us">
+                    <img src="images/IMG_9103.jpeg" alt="Us">
+                    <img src="images/IMG_9344.jpeg" alt="Us">
                 </div>
                 <p>You just made me the happiest person in the world, Peanut!</p>
                 <p style="font-size: 2rem; margin-top: 20px;">I love you! ❤️</p>
                 <p style="font-size: 0.9rem; color: #999; margin-top: 30px;">You're getting a special delivery from Cookie with some of your favorite stuff! 🎁💕</p>
+                <button class="btn btn-primary" onclick="nextScreen(9)" style="margin-top: 30px;">View Our Memories 📸</button>
+            </div>
+        </div>
+
+        <!-- Screen 9: Memories Section -->
+        <div class="screen" id="screen9">
+            <div class="card" style="max-width: 800px; width: 100%;">
+                <h2>Our Beautiful Memories Together 💕</h2>
+                <p style="margin-bottom: 20px;">Let's keep track of all our special moments!</p>
+
+                <!-- Auth Section -->
+                <div class="auth-container" id="authContainer">
+                    <button class="auth-btn" onclick="signInWithGoogle()">
+                        <span>🔐</span>
+                        <span>Sign in with Google to add memories</span>
+                    </button>
+                </div>
+
+                <!-- User Info (shown when logged in) -->
+                <div class="user-info" id="userInfo" style="display: none;">
+                    <img src="" alt="Profile" class="user-avatar" id="userAvatar">
+                    <span id="userName">User</span>
+                    <button class="btn btn-secondary" onclick="signOutUser()" style="padding: 8px 20px; margin: 0;">Sign Out</button>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tab-container" id="tabContainer" style="display: none;">
+                    <button class="tab-btn active" onclick="switchTab('view')">View Memories</button>
+                    <button class="tab-btn" onclick="switchTab('add')">Add New Memory</button>
+                </div>
+
+                <!-- View Memories Tab -->
+                <div class="tab-content active" id="viewTab">
+                    <div class="memories-grid" id="memoriesGrid">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <p>No memories yet! Add your first one.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Memory Tab -->
+                <div class="tab-content" id="addTab">
+                    <div class="memory-form">
+                        <form id="memoryForm" onsubmit="saveMemory(event)">
+                            <!-- Dates -->
+                            <div class="form-group">
+                                <label>Date(s) 📅</label>
+                                <input type="date" id="dateInput" required>
+                                <button type="button" class="btn btn-secondary" onclick="addDate()" style="margin-top: 10px; padding: 8px 20px;">Add Date</button>
+                                <div class="date-input-container" id="selectedDates"></div>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="form-group">
+                                <label>Location 📍</label>
+                                <input type="text" id="locationInput" placeholder="Where did you hang out?" required>
+                            </div>
+
+                            <!-- Activities -->
+                            <div class="form-group">
+                                <label>What did you do? 🎉</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="text" id="activityInput" placeholder="Add an activity...">
+                                    <button type="button" class="btn btn-secondary" onclick="addActivity()" style="padding: 8px 20px; margin: 0;">Add</button>
+                                </div>
+                                <p class="small-text" style="margin-top: 5px;">Each activity will be color-coded based on who added it!</p>
+                                <ul class="activity-list" id="activitiesList"></ul>
+                            </div>
+
+                            <!-- Photos -->
+                            <div class="form-group">
+                                <label>Photos 📸</label>
+                                <input type="file" id="photoInput" accept="image/*" multiple onchange="previewPhotos(event)">
+                                <p class="small-text">Photos will be automatically compressed for storage</p>
+                                <div class="photo-preview-container" id="photoPreviewContainer"></div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Save Memory 💕</button>
+                        </form>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="nextScreen(8)" style="margin-top: 20px;">Back to Valentine's Message</button>
             </div>
         </div>
     </div>
 
-    <script>
-        // All image files for floating photos
-        const allPhotos = [
-            'DSCF3755.JPG', 'IMG_1895.jpeg', 'IMG_2870.jpeg', 'IMG_2876.jpeg',
-            'IMG_2877.jpeg', 'IMG_2885.jpeg', 'IMG_2888.jpeg', 'IMG_2955.jpeg',
-            'IMG_2971.jpeg', 'IMG_4731.jpeg', 'IMG_4751.jpeg', 'IMG_4788.jpeg',
-            'IMG_4807.jpeg', 'IMG_7011.jpeg', 'IMG_9017.jpeg', 'IMG_9039.jpeg',
-            'IMG_9103.jpeg', 'IMG_9344.jpeg', 'IMG_9358.jpeg'
-        ];
-
-        // Create floating hearts and photos
-        function createFloatingHearts() {
-            const container = document.getElementById('heartsContainer');
-            const hearts = ['💕', '💖', '💗', '💓', '💝', '❤️', '🩷'];
-
-            // Initial hearts
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.className = 'floating-heart';
-                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                    heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.fontSize = (15 + Math.random() * 20) + 'px';
-                    heart.style.animationDuration = (4 + Math.random() * 4) + 's';
-                    heart.style.animationDelay = Math.random() * 2 + 's';
-                    container.appendChild(heart);
-                    setTimeout(() => heart.remove(), 8000);
-                }, i * 300);
-            }
-
-            // Initial floating photos
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createFloatingPhoto();
-                }, i * 1000);
-            }
-
-            // Keep creating hearts and photos
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.className = 'floating-heart';
-                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.fontSize = (15 + Math.random() * 20) + 'px';
-                heart.style.animationDuration = (4 + Math.random() * 4) + 's';
-                container.appendChild(heart);
-                setTimeout(() => heart.remove(), 8000);
-            }, 600);
-
-            setInterval(() => {
-                createFloatingPhoto();
-            }, 3000);
-        }
-
-        function createFloatingPhoto() {
-            const container = document.getElementById('heartsContainer');
-            const photoDiv = document.createElement('div');
-            photoDiv.className = 'floating-photo';
-
-            const img = document.createElement('img');
-            img.src = allPhotos[Math.floor(Math.random() * allPhotos.length)];
-
-            photoDiv.appendChild(img);
-            photoDiv.style.left = Math.random() * 90 + 'vw';
-            photoDiv.style.animationDuration = (6 + Math.random() * 4) + 's';
-            photoDiv.style.animationDelay = Math.random() + 's';
-
-            container.appendChild(photoDiv);
-            setTimeout(() => photoDiv.remove(), 10000);
-        }
-
-        createFloatingHearts();
-
-        // Slideshow functionality
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slideshow-image');
-
-        function initSlideshow() {
-            const dotsContainer = document.getElementById('slideshowDots');
-            slides.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.className = 'slide-dot' + (index === 0 ? ' active' : '');
-                dot.onclick = () => goToSlide(index);
-                dotsContainer.appendChild(dot);
-            });
-
-            setInterval(nextSlide, 3000);
-        }
-
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            document.querySelectorAll('.slide-dot')[currentSlide].classList.remove('active');
-
-            currentSlide = (currentSlide + 1) % slides.length;
-
-            slides[currentSlide].classList.add('active');
-            document.querySelectorAll('.slide-dot')[currentSlide].classList.add('active');
-        }
-
-        function goToSlide(index) {
-            slides[currentSlide].classList.remove('active');
-            document.querySelectorAll('.slide-dot')[currentSlide].classList.remove('active');
-
-            currentSlide = index;
-
-            slides[currentSlide].classList.add('active');
-            document.querySelectorAll('.slide-dot')[currentSlide].classList.add('active');
-        }
-
-        // Initialize slideshow when screen 5 is shown
-        const slideshowObserver = new MutationObserver(() => {
-            if (document.getElementById('screen5').classList.contains('active')) {
-                if (document.getElementById('slideshowDots').children.length === 0) {
-                    initSlideshow();
-                }
-            }
-        });
-        slideshowObserver.observe(document.getElementById('screen5'), { attributes: true });
-
-        // Screen navigation
-        function nextScreen(num) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('screen' + num).classList.add('active');
-        }
-
-        // Trivia
-        const triviaQuestions = [
-            {
-                question: "Where was our very first date? 🚗",
-                options: ["A fancy restaurant", "Lipscomb Parking Garage", "The movie theater", "A coffee shop"],
-                correct: 1
-            },
-            {
-                question: "What's my favorite food to share with you? 🍴",
-                options: ["Pizza", "Burgers", "Tacos", "Sushi"],
-                correct: 2
-            },
-            {
-                question: "What candy do I know you absolutely LOVE? 🍬",
-                options: ["Skittles", "M&Ms", "Reese's", "Snickers"],
-                correct: 2
-            },
-            {
-                question: "What's one of your favorite hobbies? 🎨",
-                options: ["Video games", "Coloring", "Knitting", "Gardening"],
-                correct: 1
-            },
-            {
-                question: "Besides coloring, what else do you love doing? 👩‍🍳",
-                options: ["Skydiving", "Cooking & Baking", "Rock climbing", "Coding"],
-                correct: 1
-            }
-        ];
-
-        let currentQuestion = 0;
-        let score = 0;
-
-        function startTrivia() {
-            currentQuestion = 0;
-            score = 0;
-            nextScreen(3);
-            showQuestion();
-        }
-
-        function showQuestion() {
-            const q = triviaQuestions[currentQuestion];
-            document.getElementById('triviaQuestion').textContent = q.question;
-            document.getElementById('scoreDisplay').textContent = `Score: ${score}/${currentQuestion}`;
-
-            // Progress dots
-            const dotsHtml = triviaQuestions.map((_, i) => {
-                let className = 'dot';
-                if (i < currentQuestion) className += ' completed';
-                if (i === currentQuestion) className += ' active';
-                return `<div class="${className}"></div>`;
-            }).join('');
-            document.getElementById('progressDots').innerHTML = dotsHtml;
-
-            // Options
-            const optionsHtml = q.options.map((opt, i) =>
-                `<div class="trivia-option" onclick="selectAnswer(${i})">${opt}</div>`
-            ).join('');
-            document.getElementById('triviaOptions').innerHTML = optionsHtml;
-        }
-
-        function selectAnswer(index) {
-            const options = document.querySelectorAll('.trivia-option');
-            const correct = triviaQuestions[currentQuestion].correct;
-
-            options.forEach((opt, i) => {
-                opt.style.pointerEvents = 'none';
-                if (i === correct) {
-                    opt.classList.add('correct');
-                } else if (i === index && i !== correct) {
-                    opt.classList.add('wrong');
-                }
-            });
-
-            if (index === correct) {
-                score++;
-            }
-
-            setTimeout(() => {
-                currentQuestion++;
-                if (currentQuestion < triviaQuestions.length) {
-                    showQuestion();
-                } else {
-                    showResults();
-                }
-            }, 1200);
-        }
-
-        function showResults() {
-            const percentage = (score / triviaQuestions.length) * 100;
-            let emoji, title, message;
-
-            if (percentage === 100) {
-                emoji = '🏆';
-                title = 'PERFECT SCORE!';
-                message = "You know everything about us! I'm not surprised though... you're amazing!";
-            } else if (percentage >= 60) {
-                emoji = '🌟';
-                title = 'Great Job!';
-                message = "You know us pretty well! We make a great team!";
-            } else {
-                emoji = '💕';
-                title = 'Nice Try!';
-                message = "Looks like we need more taco dates to refresh your memory!";
-            }
-
-            document.getElementById('resultsEmoji').textContent = emoji;
-            document.getElementById('resultsTitle').textContent = title;
-            document.getElementById('resultsMessage').textContent = message + ` (${score}/${triviaQuestions.length})`;
-            nextScreen(4);
-        }
-
-        // Coloring Canvas
-        const colors = ['#e74c8c', '#ff6b6b', '#f857a6', '#a855f7', '#3b82f6', '#22c55e', '#eab308', '#f97316', '#ec4899', '#000000'];
-        let currentColor = colors[0];
-        let isDrawing = false;
-        let canvas, ctx;
-
-        function initCanvas() {
-            canvas = document.getElementById('coloringCanvas');
-            ctx = canvas.getContext('2d');
-
-            // Set up color palette
-            const palette = document.getElementById('colorPalette');
-            palette.innerHTML = colors.map((color, i) =>
-                `<div class="color-btn ${i === 0 ? 'active' : ''}" style="background: ${color}" onclick="selectColor('${color}', this)"></div>`
-            ).join('');
-
-            // Draw initial heart outline
-            drawHeartOutline();
-
-            // Canvas events
-            canvas.addEventListener('mousedown', startDrawing);
-            canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('mouseup', stopDrawing);
-            canvas.addEventListener('mouseout', stopDrawing);
-
-            // Touch events
-            canvas.addEventListener('touchstart', handleTouch);
-            canvas.addEventListener('touchmove', handleTouchMove);
-            canvas.addEventListener('touchend', stopDrawing);
-
-            // Brush size
-            const brushSlider = document.getElementById('brushSize');
-            brushSlider.addEventListener('input', (e) => {
-                document.getElementById('brushSizeLabel').textContent = e.target.value + 'px';
-            });
-        }
-
-        function drawHeartOutline() {
-            ctx.fillStyle = 'white';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.strokeStyle = '#ffccd5';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-
-            // Draw a heart shape
-            const x = canvas.width / 2;
-            const y = canvas.height / 2;
-            const size = 80;
-
-            ctx.moveTo(x, y + size / 4);
-            ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y - size / 4);
-            ctx.bezierCurveTo(x - size / 2, y - size / 2, x, y - size / 2, x, y - size / 4);
-            ctx.bezierCurveTo(x, y - size / 2, x + size / 2, y - size / 2, x + size / 2, y - size / 4);
-            ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + size / 4);
-
-            ctx.stroke();
-
-            // Add some decorative text
-            ctx.fillStyle = '#ffb6c1';
-            ctx.font = '14px Poppins';
-            ctx.textAlign = 'center';
-            ctx.fillText('Color me! 🎨', x, y + size / 2 + 30);
-        }
-
-        function selectColor(color, element) {
-            currentColor = color;
-            document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-        }
-
-        function startDrawing(e) {
-            isDrawing = true;
-            draw(e);
-        }
-
-        function draw(e) {
-            if (!isDrawing) return;
-
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const brushSize = document.getElementById('brushSize').value;
-
-            ctx.fillStyle = currentColor;
-            ctx.beginPath();
-            ctx.arc(x, y, brushSize / 2, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        function handleTouch(e) {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const mouseEvent = new MouseEvent('mousedown', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(mouseEvent);
-        }
-
-        function handleTouchMove(e) {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const mouseEvent = new MouseEvent('mousemove', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(mouseEvent);
-        }
-
-        function stopDrawing() {
-            isDrawing = false;
-        }
-
-        function clearCanvas() {
-            drawHeartOutline();
-        }
-
-        // Initialize canvas when screen 6 is shown
-        const canvasObserver = new MutationObserver(() => {
-            if (document.getElementById('screen6').classList.contains('active')) {
-                initCanvas();
-            }
-        });
-        canvasObserver.observe(document.getElementById('screen6'), { attributes: true });
-
-        // The No Button That Runs Away
-        let noClickCount = 0;
-        const funnyMessages = [
-            "Nice try! 😏",
-            "You can't escape love!",
-            "The button is too fast for you!",
-            "Seriously? Just say yes! 💕",
-            "I can do this all day...",
-            "You're making the button tired!",
-            "Just accept your fate! 😄",
-            "RESISTANCE IS FUTILE!",
-            "The yes button is lonely...",
-            "Okay now you're just being silly!"
-        ];
-
-        function runAway() {
-            const btn = document.getElementById('noBtn');
-            const container = document.getElementById('questionButtons');
-            const containerRect = container.getBoundingClientRect();
-
-            // Random position within the container area
-            const maxX = window.innerWidth - 100;
-            const maxY = window.innerHeight - 50;
-
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
-
-            btn.style.position = 'fixed';
-            btn.style.left = randomX + 'px';
-            btn.style.top = randomY + 'px';
-            btn.style.zIndex = '1000';
-
-            // Make it smaller each time
-            const currentSize = parseFloat(btn.style.fontSize) || 1.2;
-            if (currentSize > 0.5) {
-                btn.style.fontSize = (currentSize - 0.1) + 'rem';
-            }
-
-            // Show funny message
-            noClickCount++;
-            const msgEl = document.getElementById('noMessage');
-            msgEl.textContent = funnyMessages[noClickCount % funnyMessages.length];
-            msgEl.style.display = 'block';
-
-            // Rain tacos and Reese's occasionally
-            if (noClickCount % 3 === 0) {
-                rainTreats();
-            }
-        }
-
-        function rainTreats() {
-            const treats = ['🌮', '🍫', '🥜'];
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    const treat = document.createElement('div');
-                    treat.className = 'treat-rain';
-                    treat.textContent = treats[Math.floor(Math.random() * treats.length)];
-                    treat.style.left = Math.random() * 100 + 'vw';
-                    treat.style.animationDuration = (2 + Math.random() * 2) + 's';
-                    document.body.appendChild(treat);
-                    setTimeout(() => treat.remove(), 4000);
-                }, i * 100);
-            }
-        }
-
-        // Say Yes!
-        function sayYes() {
-            nextScreen(8);
-            celebrate();
-        }
-
-        function celebrate() {
-            // Confetti explosion
-            const colors = ['#e74c8c', '#ff6b6b', '#f857a6', '#a855f7', '#3b82f6', '#22c55e', '#eab308', '#ffd700'];
-
-            for (let i = 0; i < 100; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.width = (5 + Math.random() * 10) + 'px';
-                    confetti.style.height = (5 + Math.random() * 10) + 'px';
-                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                    confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
-                    document.body.appendChild(confetti);
-                    setTimeout(() => confetti.remove(), 4000);
-                }, i * 30);
-            }
-
-            // Also rain treats!
-            rainTreats();
-            setTimeout(rainTreats, 1000);
-            setTimeout(rainTreats, 2000);
-        }
-    </script>
+    <!-- Image Modal -->
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img src="" alt="Full size" id="modalImage">
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="js/firebase-config.js"></script>
+
+    <!-- Main JavaScript Files -->
+    <script src="js/valentine.js"></script>
+    <script src="js/memories.js"></script>
 </body>
 </html>
