@@ -14,6 +14,138 @@ body {
     position: relative;
 }
 
+body.loading {
+    overflow: hidden;
+}
+
+body.loading .homepage-split {
+    opacity: 0;
+}
+
+/* ============================================
+   AUTHENTICATION SCREEN
+   ============================================ */
+
+.auth-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+body:not(.auth-required) .auth-screen {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.auth-card {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 20px 60px rgba(231, 76, 140, 0.3);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    animation: fadeIn 0.6s ease-in;
+}
+
+.auth-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.auth-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #e74c8c;
+    margin-bottom: 0.5rem;
+}
+
+.auth-message {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.auth-btn-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: white;
+    border: 2px solid #e74c8c;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e74c8c;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.auth-btn-main:hover {
+    background: #e74c8c;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(231, 76, 140, 0.3);
+}
+
+.google-icon {
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+/* ============================================
+   USER BAR (TOP RIGHT)
+   ============================================ */
+
+.user-bar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.user-greeting {
+    font-weight: 600;
+    color: #e74c8c;
+}
+
+.sign-out-btn-main {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid #e74c8c;
+    border-radius: 20px;
+    color: #e74c8c;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.sign-out-btn-main:hover {
+    background: #e74c8c;
+    color: white;
+}
+
 /* Floating Hearts and Photos Background */
 .hearts-container {
     position: fixed;
@@ -829,4 +961,228 @@ p {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+}
+
+/* ============================================
+   HOMEPAGE SPLIT-SCREEN DESIGN
+   ============================================ */
+
+.homepage-split {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeIn 0.6s ease-in forwards;
+    animation-delay: 0.2s;
+}
+
+.split-section {
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.split-section:hover {
+    flex: 1.1;
+}
+
+/* Valentines Section - Pink/Romantic */
+.valentines-section {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+}
+
+.valentines-section .split-overlay {
+    background: linear-gradient(45deg, rgba(255, 154, 158, 0.3), rgba(254, 207, 239, 0.3));
+}
+
+/* Digital Diaries Section - Vintage/Parchment */
+.diaries-section {
+    background: linear-gradient(135deg, #f7f4ed 0%, #e4dac8 100%);
+}
+
+.diaries-section .split-overlay {
+    background: linear-gradient(45deg, rgba(247, 244, 237, 0.3), rgba(228, 218, 200, 0.3));
+}
+
+.split-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(0px);
+    transition: backdrop-filter 0.4s;
+    pointer-events: none;
+}
+
+.split-section:hover .split-overlay {
+    backdrop-filter: blur(2px);
+}
+
+.split-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    transition: all 0.4s;
+    pointer-events: none;
+}
+
+.split-section:hover .split-content {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.split-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.split-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.valentines-section .split-title {
+    color: #e74c8c;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.diaries-section .split-title {
+    color: #5d4e37;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.split-description {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.valentines-section .split-description {
+    color: #c0396e;
+}
+
+.diaries-section .split-description {
+    color: #6b5d52;
+}
+
+.split-cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.split-section:hover .split-cta {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.valentines-section .split-cta {
+    background: white;
+    color: #e74c8c;
+    box-shadow: 0 4px 15px rgba(231, 76, 140, 0.3);
+}
+
+.valentines-section .split-cta:hover {
+    background: #e74c8c;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(231, 76, 140, 0.4);
+}
+
+.diaries-section .split-cta {
+    background: #5d4e37;
+    color: #f7f4ed;
+    box-shadow: 0 4px 15px rgba(93, 78, 55, 0.3);
+}
+
+.diaries-section .split-cta:hover {
+    background: #3d5a47;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(61, 90, 71, 0.4);
+}
+
+/* Divider Line */
+.split-section::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    right: 0;
+    width: 2px;
+    height: 80%;
+    background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        transparent 100%);
+}
+
+.diaries-section::after {
+    display: none;
+}
+
+/* Responsive Design for Split Screen */
+@media (max-width: 768px) {
+    .homepage-split {
+        flex-direction: column;
+    }
+
+    .split-section {
+        flex: 1;
+    }
+
+    .split-section:hover {
+        flex: 1.2;
+    }
+
+    .split-icon {
+        font-size: 3.5rem;
+    }
+
+    .split-title {
+        font-size: 2.5rem;
+    }
+
+    .split-description {
+        font-size: 1rem;
+    }
+
+    .split-cta {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .split-section::after {
+        top: auto;
+        bottom: 0;
+        left: 10%;
+        right: auto;
+        width: 80%;
+        height: 2px;
+        background: linear-gradient(to right,
+            transparent 0%,
+            rgba(255, 255, 255, 0.5) 50%,
+            transparent 100%);
+    }
 }

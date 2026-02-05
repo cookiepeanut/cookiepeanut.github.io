@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Diaries - Timeline</title>
+    <link rel="stylesheet" href="styles/diaries.css">
+</head>
+<body class="diary-loading">
+    <!-- Header Navigation -->
+    <header class="diary-header">
+        <nav class="diary-nav">
+            <a href="../index.html" class="nav-logo">← Home</a>
+            <div class="nav-links">
+                <a href="timeline.html" class="nav-link active">Timeline</a>
+                <a href="browse.html" class="nav-link">Browse</a>
+            </div>
+            <div class="user-section" id="userSection">
+                <button class="auth-btn" onclick="signInWithGoogle()" id="signInBtn">
+                    <span>Sign In</span>
+                </button>
+                <div class="user-info" id="userInfo" style="display: none;">
+                    <span class="user-name" id="userName"></span>
+                    <button class="sign-out-btn" onclick="signOutUser()">Sign Out</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="diary-main">
+        <div class="timeline-hero">
+            <h1 class="timeline-title">Our Journey Together</h1>
+            <p class="timeline-subtitle">A collection of cherished moments and memories</p>
+        </div>
+
+        <!-- Add Memory Button -->
+        <button class="fab-add-memory" onclick="openAddMemoryModal()" title="Add New Memory">
+            <span>+</span>
+        </button>
+
+        <!-- Timeline Container -->
+        <div class="timeline-container" id="timelineContainer">
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+
+            <!-- Timeline will be populated here -->
+            <div class="timeline" id="timeline"></div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">📭</div>
+                <h3>No memories yet</h3>
+                <p>Sign in to start adding your special moments</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Image Modal -->
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img src="" alt="Full size" id="modalImage">
+    </div>
+
+    <!-- Add Memory Modal -->
+    <div class="add-memory-modal" id="addMemoryModal">
+        <div class="modal-overlay" onclick="closeAddMemoryModal()"></div>
+        <div class="modal-content-form">
+            <div class="modal-header">
+                <h2>Add New Memory</h2>
+                <button class="modal-close-btn" onclick="closeAddMemoryModal()">&times;</button>
+            </div>
+
+            <form id="addMemoryForm" onsubmit="saveNewMemory(event)">
+                <!-- Dates -->
+                <div class="form-group">
+                    <label>Date(s) *</label>
+                    <div class="date-inputs">
+                        <input type="date" id="startDate" required>
+                        <span class="date-separator">to</span>
+                        <input type="date" id="endDate" placeholder="Optional">
+                    </div>
+                    <small>Leave second date empty for single day</small>
+                </div>
+
+                <!-- Location -->
+                <div class="form-group">
+                    <label>Location *</label>
+                    <input type="text" id="memoryLocation" placeholder="Where did this happen?" required>
+                </div>
+
+                <!-- Notes/Activities -->
+                <div class="form-group">
+                    <label>What We Did *</label>
+                    <div class="notes-input-group">
+                        <input type="text" id="noteInput" placeholder="Add a note..." onkeypress="handleNoteKeypress(event)">
+                        <button type="button" class="btn-add-note" onclick="addNote()">Add</button>
+                    </div>
+                    <ul class="notes-list" id="notesList"></ul>
+                </div>
+
+                <!-- Restaurants (Optional) -->
+                <div class="form-group">
+                    <label>Restaurants <span class="optional">(optional)</span></label>
+                    <input type="text" id="restaurantInput" placeholder="Any restaurants you visited?">
+                </div>
+
+                <!-- Photos (Optional) -->
+                <div class="form-group">
+                    <label>Photos <span class="optional">(optional)</span></label>
+                    <input type="file" id="memoryPhotos" accept="image/*" multiple onchange="previewMemoryPhotos(event)">
+                    <small>Photos will be compressed automatically</small>
+                    <div class="photo-preview-grid" id="photoPreviewGrid"></div>
+                </div>
+
+                <!-- Submit -->
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeAddMemoryModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Memory</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="../js/firebase-config.js"></script>
+
+    <!-- Digital Diaries JavaScript -->
+    <script src="scripts/diaries.js"></script>
+</body>
+</html>

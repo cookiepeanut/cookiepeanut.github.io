@@ -3,27 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hey Peanut! 💕</title>
+    <title>Personal Collection</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="loading auth-required">
+    <!-- Authentication Screen -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-card">
+            <div class="auth-icon">🔐</div>
+            <h1 class="auth-title">Welcome</h1>
+            <p class="auth-message">Please sign in to continue</p>
+            <button class="auth-btn-main" onclick="signInWithGoogle()">
+                <span class="google-icon">G</span>
+                <span>Sign in with Google</span>
+            </button>
+        </div>
+    </div>
+
     <!-- Floating Hearts and Photos Background -->
     <div class="hearts-container" id="heartsContainer"></div>
 
     <div class="container">
-        <!-- Screen 0: Landing Page - Choose Your Path -->
+        <!-- Screen 0: Landing Page - Split Screen Design -->
         <div class="screen active" id="screen0">
-            <div class="card">
-                <img src="images/IMG_2876.jpeg" alt="Us" class="welcome-photo">
-                <h1>Hey Peanut! 💕</h1>
-                <p>What would you like to explore today?</p>
-                <div class="btn-group" style="justify-content: center; margin-top: 30px;">
-                    <button class="btn btn-primary" onclick="goToValentine()" style="font-size: 1.3rem; padding: 20px 40px;">
-                        💘 Valentine's Day
-                    </button>
-                    <button class="btn btn-primary" onclick="goToMemories()" style="font-size: 1.3rem; padding: 20px 40px;">
-                        📸 Our Memories
-                    </button>
+            <!-- User Info Bar -->
+            <div class="user-bar" id="userBar" style="display: none;">
+                <span class="user-greeting" id="userGreeting">Hey!</span>
+                <button class="sign-out-btn-main" onclick="signOutUser()">Sign Out</button>
+            </div>
+
+            <div class="homepage-split">
+                <!-- Valentines Section -->
+                <div class="split-section valentines-section" onclick="goToValentine()">
+                    <div class="split-overlay"></div>
+                    <div class="split-content">
+                        <div class="split-icon">💘</div>
+                        <h2 class="split-title">Valentines</h2>
+                        <p class="split-description">A romantic journey through our love story</p>
+                        <div class="split-cta">Explore →</div>
+                    </div>
+                </div>
+
+                <!-- Digital Diaries Section -->
+                <div class="split-section diaries-section" onclick="goToDiaries()">
+                    <div class="split-overlay"></div>
+                    <div class="split-content">
+                        <div class="split-icon">📖</div>
+                        <h2 class="split-title">Digital Diaries</h2>
+                        <p class="split-description">A timeline of our cherished moments</p>
+                        <div class="split-cta">Discover →</div>
+                    </div>
                 </div>
             </div>
         </div>

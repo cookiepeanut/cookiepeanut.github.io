@@ -7,6 +7,72 @@ const allPhotos = [
     'images/IMG_9103.jpeg', 'images/IMG_9344.jpeg', 'images/IMG_9358.jpeg'
 ];
 
+let currentUser = null;
+
+// ============================================
+// AUTHENTICATION
+// ============================================
+
+async function signInWithGoogle() {
+    if (!window.firebaseSignInWithPopup) {
+        alert('Firebase is loading, please try again in a moment.');
+        return;
+    }
+
+    try {
+        const result = await window.firebaseSignInWithPopup(window.firebaseAuth, window.firebaseProvider);
+        currentUser = result.user;
+        updateAuthUI(currentUser);
+    } catch (error) {
+        console.error('Sign-in error:', error);
+        alert('Failed to sign in. Please try again.');
+    }
+}
+
+async function signOutUser() {
+    try {
+        await window.firebaseSignOut(window.firebaseAuth);
+        currentUser = null;
+        document.body.classList.add('auth-required');
+        document.getElementById('userBar').style.display = 'none';
+        // Go back to home screen
+        nextScreen(0);
+    } catch (error) {
+        console.error('Sign-out error:', error);
+    }
+}
+
+function updateAuthUI(user) {
+    if (user) {
+        // Remove auth requirement
+        document.body.classList.remove('auth-required');
+
+        // Show user bar
+        const userBar = document.getElementById('userBar');
+        const userGreeting = document.getElementById('userGreeting');
+        userBar.style.display = 'flex';
+        userGreeting.textContent = `Hey ${user.displayName || 'there'}!`;
+    }
+}
+
+// Initialize Firebase auth
+function initializeAuth() {
+    if (window.firebaseOnAuthStateChanged && window.firebaseAuth) {
+        window.firebaseOnAuthStateChanged(window.firebaseAuth, (user) => {
+            currentUser = user;
+            if (user) {
+                updateAuthUI(user);
+            } else {
+                document.body.classList.add('auth-required');
+                document.getElementById('userBar').style.display = 'none';
+            }
+        });
+    } else {
+        // Firebase not loaded yet, retry
+        setTimeout(initializeAuth, 100);
+    }
+}
+
 // Navigation functions for landing page
 function goToValentine() {
     nextScreen(1);
@@ -14,6 +80,11 @@ function goToValentine() {
 
 function goToMemories() {
     nextScreen(9);
+}
+
+function goToDiaries() {
+    // Navigate to Digital Diaries timeline page
+    window.location.href = 'diaries/timeline.html';
 }
 
 // Screen navigation
@@ -83,7 +154,19 @@ function createFloatingPhoto() {
     setTimeout(() => photoDiv.remove(), 10000);
 }
 
-createFloatingHearts();
+// Initialize hearts after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Firebase authentication
+    initializeAuth();
+
+    // Remove loading class from body
+    document.body.classList.remove('loading');
+
+    // Add a small delay to ensure CSS is applied
+    setTimeout(() => {
+        createFloatingHearts();
+    }, 300);
+});
 
 // Slideshow functionality
 let currentSlide = 0;

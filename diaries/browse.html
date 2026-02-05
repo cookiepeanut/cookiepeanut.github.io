@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Diaries - Browse</title>
+    <link rel="stylesheet" href="styles/diaries.css">
+</head>
+<body class="diary-loading">
+    <!-- Header Navigation -->
+    <header class="diary-header">
+        <nav class="diary-nav">
+            <a href="../index.html" class="nav-logo">← Home</a>
+            <div class="nav-links">
+                <a href="timeline.html" class="nav-link">Timeline</a>
+                <a href="browse.html" class="nav-link active">Browse</a>
+            </div>
+            <div class="user-section" id="userSection">
+                <button class="auth-btn" onclick="signInWithGoogle()" id="signInBtn">
+                    <span>Sign In</span>
+                </button>
+                <div class="user-info" id="userInfo" style="display: none;">
+                    <span class="user-name" id="userName"></span>
+                    <button class="sign-out-btn" onclick="signOutUser()">Sign Out</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="diary-main">
+        <div class="browse-header">
+            <h1 class="browse-title">Browse Memories</h1>
+
+            <!-- Controls -->
+            <div class="browse-controls">
+                <!-- Search -->
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search memories..." class="search-input">
+                    <span class="search-icon">🔍</span>
+                </div>
+
+                <!-- Sort & Filter -->
+                <div class="control-group">
+                    <div class="control-item">
+                        <label for="sortBy">Sort by:</label>
+                        <select id="sortBy" class="control-select">
+                            <option value="date-desc">Date (Newest)</option>
+                            <option value="date-asc">Date (Oldest)</option>
+                            <option value="location-asc">Location (A-Z)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-item">
+                        <label for="viewMode">View:</label>
+                        <div class="view-toggle" id="viewToggle">
+                            <button class="view-btn active" data-view="grid" onclick="switchView('grid')">
+                                <span>⊞</span>
+                            </button>
+                            <button class="view-btn" data-view="list" onclick="switchView('list')">
+                                <span>☰</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Memories Grid/List -->
+        <div class="memories-container grid-view" id="memoriesContainer">
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+
+            <!-- Memories will be populated here -->
+            <div class="memories-grid" id="memoriesGrid"></div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">📭</div>
+                <h3>No memories found</h3>
+                <p>Try adjusting your search or filters</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Image Modal -->
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img src="" alt="Full size" id="modalImage">
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="../js/firebase-config.js"></script>
+
+    <!-- Digital Diaries JavaScript -->
+    <script src="scripts/browse.js"></script>
+</body>
+</html>

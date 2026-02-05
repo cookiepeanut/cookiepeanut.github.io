@@ -9,6 +9,18 @@ const USER_COLORS = {
     'lisapatel1101@gmail.com': { color: '#ec4899', name: 'Peanut', class: 'user-pink' }
 };
 
+// Security: HTML escape function to prevent XSS
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text ? String(text).replace(/[&<>"']/g, (m) => map[m]) : '';
+}
+
 // Get user color
 function getUserColor(email) {
     return USER_COLORS[email] || { color: '#999', name: 'Unknown', class: 'user-blue' };
@@ -313,32 +325,57 @@ function renderMemories(memories) {
 
         const activitiesHtml = memory.activities.map(activity => {
             const userColor = getUserColor(activity.userId);
-            return `<li class="${userColor.class}">• ${activity.text}</li>`;
+            return `<li class="${escapeHtml(userColor.class)}">• ${escapeHtml(activity.text)}</li>`;
         }).join('');
 
         const photosHtml = memory.photos && memory.photos.length > 0 ? `
             <div class="memory-photos">
-                ${memory.photos.map(photo => `
-                    <img src="${photo}" alt="Memory photo" onclick="openModal('${photo}')">
+                ${memory.photos.map((photo, photoIndex) => `
+                    <img src="${escapeHtml(photo)}"
+                         alt="Memory photo"
+                         class="memory-photo-img"
+                         data-photo-src="${escapeHtml(photo)}"
+                         id="memory-photo-${escapeHtml(memory.id)}-${photoIndex}">
                 `).join('')}
             </div>
         ` : '';
 
         return `
-            <div class="memory-card">
-                <div class="memory-date">${datesText}</div>
-                <div class="memory-location">📍 ${memory.location}</div>
+            <div class="memory-card" data-memory-id="${escapeHtml(memory.id)}">
+                <div class="memory-date">${escapeHtml(datesText)}</div>
+                <div class="memory-location">📍 ${escapeHtml(memory.location)}</div>
                 <ul class="memory-activities">${activitiesHtml}</ul>
                 ${photosHtml}
                 <div style="font-size: 0.8rem; color: #999; margin-top: 10px;">
-                    Added by ${memory.createdByName}
+                    Added by ${escapeHtml(memory.createdByName)}
                 </div>
                 ${currentUser.email === memory.createdBy ? `
-                    <button class="memory-delete-btn" onclick="deleteMemory('${memory.id}')">Delete</button>
+                    <button class="memory-delete-btn" data-memory-id="${escapeHtml(memory.id)}">Delete</button>
                 ` : ''}
             </div>
         `;
     }).join('');
+
+    // Add event listeners for photo clicks
+    memories.forEach(memory => {
+        if (memory.photos && memory.photos.length > 0) {
+            memory.photos.forEach((photo, photoIndex) => {
+                const photoEl = document.getElementById(`memory-photo-${memory.id}-${photoIndex}`);
+                if (photoEl) {
+                    photoEl.addEventListener('click', () => openModal(photo));
+                }
+            });
+        }
+    });
+
+    // Add event listeners for delete buttons
+    const deleteButtons = container.querySelectorAll('.memory-delete-btn');
+    deleteButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const memoryId = btn.getAttribute('data-memory-id');
+            deleteMemory(memoryId);
+        });
+    });
 }
 
 // Delete memory
