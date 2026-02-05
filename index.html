@@ -11,8 +11,25 @@
     <div class="hearts-container" id="heartsContainer"></div>
 
     <div class="container">
+        <!-- Screen 0: Landing Page - Choose Your Path -->
+        <div class="screen active" id="screen0">
+            <div class="card">
+                <img src="images/IMG_2876.jpeg" alt="Us" class="welcome-photo">
+                <h1>Hey Peanut! 💕</h1>
+                <p>What would you like to explore today?</p>
+                <div class="btn-group" style="justify-content: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="goToValentine()" style="font-size: 1.3rem; padding: 20px 40px;">
+                        💘 Valentine's Day
+                    </button>
+                    <button class="btn btn-primary" onclick="goToMemories()" style="font-size: 1.3rem; padding: 20px 40px;">
+                        📸 Our Memories
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Screen 1: Welcome -->
-        <div class="screen active" id="screen1">
+        <div class="screen" id="screen1">
             <div class="card">
                 <img src="images/IMG_2876.jpeg" alt="Us" class="welcome-photo">
                 <h1>Helloooooo!</h1>
@@ -128,7 +145,7 @@
                 <p>You just made me the happiest person in the world, Peanut!</p>
                 <p style="font-size: 2rem; margin-top: 20px;">I love you! ❤️</p>
                 <p style="font-size: 0.9rem; color: #999; margin-top: 30px;">You're getting a special delivery from Cookie with some of your favorite stuff! 🎁💕</p>
-                <button class="btn btn-primary" onclick="nextScreen(9)" style="margin-top: 30px;">View Our Memories 📸</button>
+                <button class="btn btn-secondary" onclick="nextScreen(0)" style="margin-top: 30px;">Back to Home 🏠</button>
             </div>
         </div>
 
@@ -211,7 +228,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-secondary" onclick="nextScreen(8)" style="margin-top: 20px;">Back to Valentine's Message</button>
+                <button class="btn btn-secondary" onclick="nextScreen(0)" style="margin-top: 20px;">Back to Home 🏠</button>
             </div>
         </div>
     </div>

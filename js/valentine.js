@@ -7,6 +7,21 @@ const allPhotos = [
     'images/IMG_9103.jpeg', 'images/IMG_9344.jpeg', 'images/IMG_9358.jpeg'
 ];
 
+// Navigation functions for landing page
+function goToValentine() {
+    nextScreen(1);
+}
+
+function goToMemories() {
+    nextScreen(9);
+}
+
+// Screen navigation
+function nextScreen(num) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen' + num).classList.add('active');
+}
+
 // Create floating hearts and photos
 function createFloatingHearts() {
     const container = document.getElementById('heartsContainer');
@@ -115,12 +130,6 @@ const slideshowObserver = new MutationObserver(() => {
     }
 });
 slideshowObserver.observe(document.getElementById('screen5'), { attributes: true });
-
-// Screen navigation
-function nextScreen(num) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen' + num).classList.add('active');
-}
 
 // Trivia
 const triviaQuestions = [
